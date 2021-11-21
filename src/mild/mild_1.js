@@ -39,9 +39,9 @@ return a;
  * and https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math
  */
 export function maxAndMin(numbers) {
-let result = {};
-result['min'] = Math.min.apply(null, numbers);
-result['max'] = Math.max.apply(null, numbers);
+let result = {}
+result['min'] = Math.min.apply(Math, numbers);
+result['max'] = Math.max.apply(Math, numbers);
 return result;
 }
 
