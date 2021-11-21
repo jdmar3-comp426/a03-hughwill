@@ -98,11 +98,11 @@ return newobj;
  */
 export function removeKeys(object, keyList) {
 function removeKeyNonDes(obj, key) {
-   let {[key]:omit, ...newobj}=obj;
+   let {[key]:omit, ...newobj} = obj;
    return newobj;
 }
 for(let i = 0; i < keyList.length; i++) {
    object = removeKeyNonDes(object,keyList[i])
-   return object;
 }
+return object;
 }

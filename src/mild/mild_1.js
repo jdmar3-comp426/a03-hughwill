@@ -40,8 +40,8 @@ return a;
  */
 export function maxAndMin(numbers) {
 let result = {}
-result['min'] = Math.min.apply(Math, numbers);
-result['max'] = Math.max.apply(Math, numbers);
+Object.min = Math.min.apply(Math, numbers);
+Object.max = Math.max.apply(Math, numbers);
 return result;
 }
 
