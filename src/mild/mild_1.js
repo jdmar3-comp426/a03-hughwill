@@ -39,7 +39,7 @@ return a;
  * and https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math
  */
 export function maxAndMin(numbers) {
-let obj = {}
+let obj = {};
 obj.min = Math.min.apply(Math, numbers);
 obj.max = Math.max.apply(Math, numbers);
 return obj;
