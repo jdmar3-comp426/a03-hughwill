@@ -18,14 +18,19 @@ queries.
  *
  */
 export function searchHighPower(car_data, minHorsepower, minTorque) {
-    function filter1(element){
+    function filterit(element){
         return element['horsepower']>=minHorsepower&&element['torque']>=minTorque
     }
-    let filtered = car_data.filter(filter1);
-    filtered.sort(function(a,b){
+
+    let result = car_data.filter(filterit);
+
+    result.sort(function(a,b){
+
         return b.horsepower-a.horsepower;
+
     })
-    return filtered;
+
+    return result;
 }
 
 
@@ -40,14 +45,19 @@ export function searchHighPower(car_data, minHorsepower, minTorque) {
  *
  */
 export function searchMpg(car_data, minCity, minHighway) {
-    function filter2(element){
+    function filterit1(element){
         return element['highway_mpg']>=minHighway&&element['city_mpg']>=minCity
     }
-    let filtered = car_data.filter(filter2)
-    filtered.sort(function(a,b){
+
+    let result = car_data.filter(filterit1)
+
+    result.sort(function(a,b){
+
         return b.highway_mpg-a.highway_mpg;
+
     })
-    return filtered;
+
+    return result;
 }
 
 
@@ -62,18 +72,26 @@ export function searchMpg(car_data, minCity, minHighway) {
 export function searchName(car_data, searchTerm) {
     let order = [];
     let car_data1 = [];
+
     for(let i=0;i<car_data.length;i++){
-        let result = car_data[i]['id'].toUpperCase().indexOf(searchTerm.toUpperCase());
-        if(result!=-1){
-            order.push({'index':i,'pos':result});
+        let searched = car_data[i]['id'].toUpperCase().indexOf(searchTerm.toUpperCase());
+        if(searched!=-1){
+            order.push({'index':i,'pos':searched});
         }
     }
+
     order=order.sort(function(a,b){
+
         a.pos-b.pos;
+
     })
+
     for(let i=0;i<order.length;i++){
+
         car_data1.push(car_data[order[i]['index']])
+
     }
+
     return car_data1;
 }
 
@@ -87,12 +105,12 @@ export function searchName(car_data, searchTerm) {
  * @returns {[]} an array of car objects
  */
 export function searchByYear(car_data, years) {
-    let result = []
+    let searched = []
     for(let i=0;i<car_data.length;i++){
         if(years.includes(car_data[i]['year'])){
             result.push(car_data[i])
         }
     }
-    result.sort(function(a,b){return b.year-a.year})
-    return result;
+    searched.sort(function(a,b){return b.year-a.year})
+    return searched;
 }
