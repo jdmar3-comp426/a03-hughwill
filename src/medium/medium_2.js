@@ -19,10 +19,43 @@ see under the methods section
  *
  * @param {allCarStats.ratioHybrids} ratio of cars that are hybrids
  */
+export function getAverageMPG(array){
+    var highwaycount = 0;
+    var citycount = 0;
+    var citysum = 0;
+    var highwaysum = 0;
+    for (var i = 0; i < array.length; i++){
+        citysum += array[i].city_mpg;
+        highwaysum += array[i].highway_mpg;
+        highwaycount++;
+        citycount++;
+    }
+    let city = citysum/citycount;
+    let highwat = highwaysum/highwaycount;
+    return {city, highway};
+}
+export function getallYearStats (array) {
+let arr = [];
+for (var i = 0; i < array.length; i++) {
+    arr[i] = mpg_data[i].year;
+}
+return getStatistics(arr);
+}
+export function getHybridRatio(array) {
+var hybridcount = 0;
+var count = 0;
+for(var i = 0; i <array.length; i++) {
+    count++;
+    if (mpg_data[i].hybrid) {
+        hybridcount++;
+    }
+}
+return hybridcount/count;
+}
 export const allCarStats = {
-    avgMpg: undefined,
-    allYearStats: undefined,
-    ratioHybrids: undefined,
+    avgMpg: getAverageMPG(mpg_data),
+    allYearStats: getallYearStats(mpg_data),
+    ratioHybrids: getHybridRatio(mpg_data),
 };
 
 
@@ -83,7 +116,34 @@ export const allCarStats = {
  *
  * }
  */
+export function getMakerHybrids() {
+    var result = mpg_data.reduce(function(acc, value){
+    if (acc.findIndex(elem => elem.make === value.make === -1)) {
+        let hybrids = mpg_data.filter(item => item.make === value.make).filter(item => item.hybrid).map(item => item.id)
+        if (hybrids.length > 0) {
+            acc.push({make: value.make, hybrids})
+        }
+    }
+    return acc;
+},[]);
+return result;
+}
+export function getMPGbyYearAndHybrid() {
+    let year = mpg_data.map(elem => elem.year);
+    let object = {};
+    let hybrid = mpg_data.filter(elem => elem.hybrid === true);
+    let reg = mpg_data.filter(elem => elem.hybrid === false);
+    for(let i = 0; i < year.length; i++) {
+        let years = year[i];
+        let obj ={hybrid: getAverageMPG(hybrid.filter(elem => elem.year == years)),
+        notHybrid: getAverageMPG(reg.filter(elem => elem.year == years))
+    }
+    object[years] = obj;
+};
+return object;
+}
+
 export const moreStats = {
-    makerHybrids: undefined,
-    avgMpgByYearAndHybrid: undefined
+    makerHybrids: getMakerHybrids(),
+    avgMpgByYearAndHybrid: getMPGbyYearAndHybrid()
 };
